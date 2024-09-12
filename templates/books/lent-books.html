@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Add Member{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mt-4">BORROWED BOOKS LIST</h5>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-4 col-sm-6 col-lg-3">
+                            <div class="mb-3">
+                                <a href="{% url 'lend-book' %}" class="btn btn-sm btn-primary">Lend Book</a>
+                            </div>
+                        </div>
+                        <div class="col-3 ">
+
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-lg-6">
+                            <form method="POST" class="d-flex">
+                                {% csrf_token %}
+                                <div class="input-group ">
+                                    <input type="text" class="form-control form-control-lg" placeholder="Search Book By Title or Author" name="query">
+                                    <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Title</th>
+                            <th>Return Date</th>
+                            <th>Member</th>
+                            <th>Fine</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ book.book.title }}</td>
+                                    <td>{{ book.return_date }}</td>
+                                    <td>{{ book.member.name }}</td>
+                                    <td>{{ book.fine }}</td>
+                                    <td class="{% if book.returned %} text-success {% else %} text-danger {% endif %}">
+                                        {% if book.returned %}
+                                            Returned
+                                        {% else %}
+                                            Not Returned
+                                        {% endif %}
+                                    </td>
+                                    <!-- button to change status -->
+                                    
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                        <a href="{% url 'return-book' book.pk %}" class="btn {% if book.returned %} disabled btn-light {% else %} btn-success{% endif %} btn-sm">{% if book.returned %}Returned{% else %} Return {% endif %}</a>
+                                            <a href="{% url 'edit-borrowed-book' book.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{% url 'delete-borrowed-book' book.pk %}" class="btn btn-sm btn-danger">Remove</a>
+                                    
+                                        </div>
+                                        </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
