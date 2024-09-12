@@ -1,0 +1,41 @@
+
+
+.form-error{
+    color: red;
+}
+
+.form-error ul{
+    margin: 0;
+    padding: 0;
+}
+
+.form-error ul li{
+    list-style: none;
+}
+.footer span {
+    color: #008080 !important;
+}
+
+/* Default state for sidebar and LMS text */
+.sidebar {
+    width: 250px;
+    transition: width 0.3s ease;
+}
+
+.sidebar.minimized {
+    width: 60px; /* Or any smaller size you prefer */
+}
+
+.sidebar-brand {
+    display: inline-block;
+    transition: opacity 0.3s ease;
+}
+
+/* Hide LMS text when sidebar is minimized */
+.sidebar.minimized .sidebar-brand {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
